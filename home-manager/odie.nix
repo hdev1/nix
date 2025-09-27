@@ -27,6 +27,12 @@
         inputs.hyprland-contrib.packages.${pkgs.system}.hdrop
         slack
         vesktop
+        docker
+        nodejs_24
+        wireguard-tools
+        pavucontrol
+        xdg-desktop-portal-hyprland
+        wireplumber
       ];
       programs.fish.enable = true;
       programs.home-manager.enable = true;
@@ -36,8 +42,6 @@
         settings = {
           "$mainMod" = "SUPER";
           "$terminal" = "kitty";
-
-          exec-once = "caelestia shell -d";
 
           env = [ "XCURSOR_SIZE,24" "HYPRCURSOR_SIZE,24" ];
 
@@ -158,7 +162,7 @@
       programs.caelestia = {
         enable = true;
         systemd = {
-          enable = false; # if you prefer starting from your compositor
+          enable = true;
           target = "graphical-session.target";
           environment = [];
         };

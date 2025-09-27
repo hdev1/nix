@@ -11,7 +11,7 @@
   users.users.odie = {
     isNormalUser = true;
     description = "Odie";
-    extraGroups = [ "networkmanager" "wheel" ]; # 'wheel' for sudo
+    extraGroups = [ "networkmanager" "wheel" "docker" ]; # 'wheel' for sudo
     shell = pkgs.fish;
   };
 
@@ -27,6 +27,11 @@
     pulse.enable = true;
     # If you want to use JACK applications, uncomment the following
     #jack.enable = true;
+  };
+
+  # For docker
+  virtualisation.docker = {
+    enable = true;
   };
 
   programs.fish.enable = true;  
