@@ -25,6 +25,7 @@
         firefox
         kitty
         inputs.hyprland-contrib.packages.${pkgs.system}.hdrop
+        inputs.rose-pine-hyprcursor.packages.${pkgs.system}.default
         slack
         vesktop
         docker
@@ -38,6 +39,7 @@
         sunsetr
         gnumake
         python3
+        gpu-screen-recorder
       ];
       programs.fish.enable = true;
       programs.home-manager.enable = true;
@@ -49,7 +51,7 @@
           "$mainMod" = "SUPER";
           "$terminal" = "kitty";
 
-          env = [ "XCURSOR_SIZE,24" "HYPRCURSOR_SIZE,24" ];
+          env = [ "XCURSOR_SIZE,24" "HYPRCURSOR_SIZE,24" "HYPRCURSOR_THEME,rose-pine-hyprcursor" ];
 
           # Autostart
           exec-once = [ "sunsetr" ];
@@ -109,6 +111,8 @@
               # Launchers and terminals
               "$mainMod SHIFT, T, exec, kitty"
               "$mainMod, SPACE, global, caelestia:launcher"
+              "$mainMod SHIFT, R, exec, caelestia record -r"
+              "$mainMod SHIFT, S, exec, caelestia screenshot -r"
               "$mainMod, R, exec, $menu"
               "$mainMod, C, exec, codium"
               "$mainMod, E, exec, nemo" # Note: this was bound twice, using the nemo one.

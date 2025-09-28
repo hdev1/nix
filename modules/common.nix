@@ -29,6 +29,16 @@
     #jack.enable = true;
   };
 
+  # This creates a security wrapper for gpu-screen-recorder to allow it
+  # to use the KMS backend for high-performance recording.
+  security.wrappers."gsr-kms-server" = {
+    source = "${pkgs.gpu-screen-recorder}/bin/gsr-kms-server";
+    capabilities = "cap_sys_admin+ep";
+    owner = "root";
+    group = "root";
+  };
+
+
   # For docker
   virtualisation.docker = {
     enable = true;
