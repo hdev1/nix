@@ -36,6 +36,8 @@
         neofetch
         hyprsunset
         sunsetr
+        gnumake
+        python3
       ];
       programs.fish.enable = true;
       programs.home-manager.enable = true;
