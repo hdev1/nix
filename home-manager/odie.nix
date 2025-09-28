@@ -33,9 +33,13 @@
         pavucontrol
         xdg-desktop-portal-hyprland
         wireplumber
+        neofetch
+        hyprsunset
+        sunsetr
       ];
       programs.fish.enable = true;
       programs.home-manager.enable = true;
+
 
       wayland.windowManager.hyprland = {
         enable = true;
@@ -44,6 +48,9 @@
           "$terminal" = "kitty";
 
           env = [ "XCURSOR_SIZE,24" "HYPRCURSOR_SIZE,24" ];
+
+          # Autostart
+          exec-once = [ "sunsetr" ];
 
           input = {
             kb_layout = "us";
@@ -83,11 +90,13 @@
         };
 
         # Floating terminal
-        windowrulev2 =  [ "float,class:dropdown-term"
-        "size 75% 75%,class:dropdown-term"
-        "move 30 50, class:dropdown-term"
-        "dimaround, class:dropdown-term"
-        "center, class:dropdown-term" ];
+        windowrulev2 =  [
+          "float,class:dropdown-term"
+          "size 75% 75%,class:dropdown-term"
+          "move 30 50, class:dropdown-term"
+          "dimaround, class:dropdown-term"
+          "center, class:dropdown-term"
+          ];
 
           # --- Conditional Monitor Configuration ---
           # This uses the new option. `lib.mkIf` ensures this section is only
