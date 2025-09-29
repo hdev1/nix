@@ -10,6 +10,12 @@
     description = "A list of monitor configuration strings for Hyprland.";
   };
 
+  options.odie.hyprlandExtraConfig = lib.mkOption {
+    type = lib.types.nullOr lib.types.lines;
+    default = null;
+    description = "Extra configuration lines to append to hyprland.conf.";
+  };
+
   # --- The Rest of Your Configuration ---
   config = {
     home-manager.users.odie = {
@@ -47,6 +53,7 @@
 
       wayland.windowManager.hyprland = {
         enable = true;
+        extraConfig = lib.mkIf (config.odie.hyprlandExtraConfig != null) config.odie.hyprlandExtraConfig;
         settings = {
           "$mainMod" = "SUPER";
           "$terminal" = "kitty";
