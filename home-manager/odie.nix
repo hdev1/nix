@@ -46,6 +46,8 @@
         gnumake
         python3
         gpu-screen-recorder
+        nautilus
+        unrar
       ];
       programs.fish.enable = true;
       programs.home-manager.enable = true;
