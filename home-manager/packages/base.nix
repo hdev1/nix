@@ -1,0 +1,54 @@
+{ pkgs, inputs, ... }:
+
+{
+  home.packages = with pkgs; [
+    git
+    blueman
+    firefox
+    kitty
+    inputs.hyprland-contrib.packages.${pkgs.system}.hdrop
+    inputs.rose-pine-hyprcursor.packages.${pkgs.system}.default
+    inputs.claude-code.packages.${pkgs.system}.default
+    inputs.nix4nvchad.packages."${pkgs.system}".nvchad
+    slack
+    vesktop
+    docker
+    nodejs_24
+    wireguard-tools
+    pavucontrol
+    xdg-desktop-portal-hyprland
+    wireplumber
+    neofetch
+    hyprsunset
+    sunsetr
+    papirus-icon-theme
+    gnumake
+    python3
+    gpu-screen-recorder
+    nautilus
+    unrar
+    rustdesk-flutter
+    jq
+    lm_sensors
+    deno
+    cargo
+    rustc
+    gcc
+    openssl
+    chromium
+    google-chrome
+    kdePackages.xwaylandvideobridge
+    kdePackages.kdenlive
+    vlc
+    python313Packages.cairosvg
+    thunderbird
+    gparted
+    libreoffice
+    prismlauncher
+    steam
+    obsidian
+    cava
+    khal
+    inputs.dgop.packages.${pkgs.system}.default
+  ];
+}
