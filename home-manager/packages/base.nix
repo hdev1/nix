@@ -50,5 +50,7 @@
     cava
     khal
     inputs.dgop.packages.${pkgs.system}.default
+    zellij
+    lazygit
   ];
 }

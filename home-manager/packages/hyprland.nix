@@ -154,6 +154,7 @@ in
       # App Workspaces
       { name = "slack"; app = "slack"; wmClass = "Slack"; keybind1 = "S"; keybind2 = "S"; }
       { name = "discord"; app = "vesktop"; wmClass = "vesktop"; keybind1 = "S"; keybind2 = "D"; }
+      { name = "obsidian"; app = "obsidian"; wmClass = "obsidian"; keybind1 = "O"; }
     ];
 
     home.file.".config/hypr/scripts/workspace-handler.sh" = {
