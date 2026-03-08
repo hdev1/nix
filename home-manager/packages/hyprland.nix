@@ -82,9 +82,9 @@ let
         let
           windowRuleConfig =
             if ws.wmClass != null then
-              "windowrulev2 = movetoworkspace ${ws.name},class:^(${ws.wmClass})$"
+              "windowrulev2 = workspace name:${ws.name} silent,class:^(${ws.wmClass})$"
             else if ws.wmTitle != null then
-              "windowrulev2 = movetoworkspace ${ws.name},title:^(${ws.wmTitle})$"
+              "windowrulev2 = workspace name:${ws.name} silent,title:^(${ws.wmTitle})$"
             else
               "";
           startupConfig =
@@ -177,8 +177,8 @@ in
             'any(.[]; if $class != "null" and $class != "" then .class == $class else .title == $title end)')
 
           if [ "$client_exists" != "true" ]; then
-            # The command is executed in the background.
-            eval "$APP_CMD" &
+            # Use exec with workspace rule to ensure window opens on the correct workspace
+            hyprctl dispatch exec "[workspace name:$WORKSPACE_NAME silent] $APP_CMD"
           fi
         fi
       '';
@@ -302,7 +302,7 @@ in
     };
     
 
-    programs.dankMaterialShell = {
+    programs.dank-material-shell = {
       enable = true;
 
       systemd = {
