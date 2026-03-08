@@ -38,5 +38,25 @@
     '';
   };
 
+  # Mirabox macropad listener
+  systemd.user.services.macropad-listener = {
+    description = "Mirabox Macropad Listener Server";
+    after = [ "graphical-session.target" ];
+    wantedBy = [ "default.target" ];
+
+    enable = true;
+    
+    serviceConfig = {
+      ExecStart = "${pkgs.nix}/bin/nix-shell -p python3 --run 'python /home/odie/code/odie-software/opendeck-akp03/mirabox/pc_listener.py'";
+      Restart = "on-failure";
+      RestartSec = 5;
+      Environment = "PATH=${pkgs.lib.makeBinPath [
+        pkgs.wireplumber   # provides wpctl
+        pkgs.coreutils
+        pkgs.bash
+      ]}:/run/current-system/sw/bin";
+    };
+  };
+
   system.stateVersion = "25.11"; # Or your version
 }
