@@ -21,13 +21,13 @@ let
               handlerScript = "/home/odie/.config/hypr/scripts/workspace-handler.sh";
               dispatcher = if ws.app != null then "exec" else "workspace";
               params = if ws.app != null then
-                  "${handlerScript} \"${ws.name}\" \"${ws.app}\" \"${toString ws.wmClass}\" \"${toString ws.wmTitle}\" \"${if ws.startOnSwitch then "true" else "false"}\""
+                  "${handlerScript} \"${wsRef ws}\" \"${ws.app}\" \"${toString ws.wmClass}\" \"${toString ws.wmTitle}\" \"${if ws.startOnSwitch then "true" else "false"}\""
                 else
-                  ws.name;
+                  wsRef ws;
             in
             ''
               bind = $mainMod, ${keybind1}, ${dispatcher}, ${params}
-              bind = $mainMod SHIFT, ${keybind1}, movetoworkspace, ${ws.name}
+              bind = $mainMod SHIFT, ${keybind1}, movetoworkspace, ${wsRef ws}
             ''
           ) directItems);
 
@@ -41,9 +41,9 @@ let
                   handlerScript = "/home/odie/.config/hypr/scripts/workspace-handler.sh";
                   dispatcher = if ws.app != null then "exec" else "workspace";
                   params = if ws.app != null then
-                      "${handlerScript} \"${ws.name}\" \"${ws.app}\" \"${toString ws.wmClass}\" \"${toString ws.wmTitle}\" \"${if ws.startOnSwitch then "true" else "false"}\""
+                      "${handlerScript} \"${wsRef ws}\" \"${ws.app}\" \"${toString ws.wmClass}\" \"${toString ws.wmTitle}\" \"${if ws.startOnSwitch then "true" else "false"}\""
                     else
-                      ws.name;
+                      wsRef ws;
                 in
                 ''
                   bind = , ${ws.keybind2}, ${dispatcher}, ${params}
@@ -52,7 +52,7 @@ let
               ) submapItems);
               moveSubmapBinds = lib.concatStringsSep "\n" (map (ws:
                 ''
-                  bind = , ${ws.keybind2}, movetoworkspace, ${ws.name}
+                  bind = , ${ws.keybind2}, movetoworkspace, ${wsRef ws}
                   bind = , ${ws.keybind2}, submap, reset
                 ''
               ) submapItems);
@@ -77,14 +77,27 @@ let
         lib.concatStringsSep "\n" [ directBinds submap ]
       ) groupedByK1;
 
+      # Map named (non-numeric) workspaces to positive numeric IDs
+      # Hyprland gives named workspaces negative IDs which DMS filters out
+      namedWsIds = lib.listToAttrs (lib.imap0 (i: ws: {
+        name = ws.name;
+        value = toString (100 + i);
+      }) (lib.filter (ws: builtins.match "[0-9]+" ws.name == null) workspaces));
+      wsRef = ws: namedWsIds.${ws.name} or ws.name;
+
+      # Declare named workspaces with positive IDs and display names
+      workspaceDeclarations = lib.concatStringsSep "\n" (lib.mapAttrsToList (name: id:
+        "workspace = ${id}, defaultName:${name}"
+      ) namedWsIds);
+
       # Generate window rules and startup configs for all workspaces (these are not grouped by keybind)
       otherConfigs = lib.concatStringsSep "\n" (map (ws:
         let
           windowRuleConfig =
             if ws.wmClass != null then
-              "windowrulev2 = workspace name:${ws.name} silent,class:^(${ws.wmClass})$"
+              "windowrulev2 = workspace ${wsRef ws} silent,class:^(${ws.wmClass})$"
             else if ws.wmTitle != null then
-              "windowrulev2 = workspace name:${ws.name} silent,title:^(${ws.wmTitle})$"
+              "windowrulev2 = workspace ${wsRef ws} silent,title:^(${ws.wmTitle})$"
             else
               "";
           startupConfig =
@@ -101,7 +114,7 @@ let
       ) workspaces);
 
     in
-    lib.concatStringsSep "\n" ([ otherConfigs ] ++ keybindConfigs);
+    lib.concatStringsSep "\n" ([ workspaceDeclarations otherConfigs ] ++ keybindConfigs);
 
   # Generate the final extra configuration string
   workspacesExtraConfig = generateWorkspacesConfig config.odie.workspaces;
@@ -155,20 +168,21 @@ in
       { name = "slack"; app = "slack"; wmClass = "Slack"; keybind1 = "S"; keybind2 = "S"; }
       { name = "discord"; app = "vesktop"; wmClass = "vesktop"; keybind1 = "S"; keybind2 = "D"; }
       { name = "obsidian"; app = "obsidian"; wmClass = "obsidian"; keybind1 = "O"; }
+      { name = "thunderbird"; app = "thunderbird"; wmClass = "thunderbird"; keybind1 = "E"; startOnStartup = true; }
     ];
 
     home.file.".config/hypr/scripts/workspace-handler.sh" = {
       executable = true;
       text = ''
         #!/usr/bin/env bash
-        WORKSPACE_NAME="$1"
+        WORKSPACE_REF="$1"
         APP_CMD="$2"
         WM_CLASS="$3"
         WM_TITLE="$4"
         START_ON_SWITCH="$5"
 
-        # Switch to the target workspace. Prepending "name:" is necessary for named workspaces.
-        hyprctl dispatch workspace "name:$WORKSPACE_NAME"
+        # Switch to the target workspace
+        hyprctl dispatch workspace "$WORKSPACE_REF"
 
         # If startOnSwitch is true, check if the app is running and start it if not.
         if [ "$START_ON_SWITCH" = "true" ]; then
@@ -177,8 +191,7 @@ in
             'any(.[]; if $class != "null" and $class != "" then .class == $class else .title == $title end)')
 
           if [ "$client_exists" != "true" ]; then
-            # Use exec with workspace rule to ensure window opens on the correct workspace
-            hyprctl dispatch exec "[workspace name:$WORKSPACE_NAME silent] $APP_CMD"
+            hyprctl dispatch exec "[workspace $WORKSPACE_REF silent] $APP_CMD"
           fi
         fi
       '';
