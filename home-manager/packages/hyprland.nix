@@ -164,6 +164,11 @@ in
       { name = "7"; keybind1 = "7"; }
       { name = "8"; keybind1 = "8"; }
 
+      # Code Workspaces
+      { name = "code/sf"; app = "kitty --class code-sf -e zellij attach --create --force-run-commands strategyframe"; wmClass = "code-sf"; keybind1 = "C"; keybind2 = "S"; }
+      { name = "code/kyl"; app = "kitty --class code-kyl -e zellij attach --create --force-run-commands kylimmo"; wmClass = "code-kyl"; keybind1 = "C"; keybind2 = "K"; }
+      { name = "code/kitch"; app = "kitty --class code-kitch -e zellij attach --create --force-run-commands kitchr"; wmClass = "code-kitch"; keybind1 = "C"; keybind2 = "R"; }
+
       # App Workspaces
       { name = "slack"; app = "slack"; wmClass = "Slack"; keybind1 = "S"; keybind2 = "S"; }
       { name = "discord"; app = "vesktop"; wmClass = "vesktop"; keybind1 = "S"; keybind2 = "D"; }
@@ -267,7 +272,6 @@ in
             # Launchers and terminals
             "$mainMod SHIFT, T, exec, kitty"
             "$mainMod, SPACE, exec, dms ipc call spotlight toggle"
-            "$mainMod, C, exec, codium"
             "$mainMod, E, exec, nemo"
             "$mainMod, TAB, workspace, previous"
 
