@@ -53,6 +53,7 @@
     zellij
     lazygit
     wl-clipboard
+    wl-clipboard-x11 # Bridges xclip commands to Wayland
   ];
 
   programs.firefox.enable = true;
