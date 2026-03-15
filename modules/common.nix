@@ -84,6 +84,35 @@
     stdenv.cc.cc.lib
     zlib
     ncurses5
+
+    # GPU/graphics libs for Android Emulator hardware acceleration
+    libGL
+    libGLU
+    vulkan-loader
+    libdrm
+    mesa
+
+    # X11/Wayland libs the emulator needs
+    xorg.libX11
+    xorg.libXcursor
+    xorg.libXrandr
+    xorg.libXi
+    xorg.libXext
+    xorg.libXfixes
+    xorg.libxcb
+    wayland
+
+    # Other common deps for Android tooling
+    libpulseaudio
+    alsa-lib
+    nss
+    nspr
+    expat
+    glib
+    dbus
+    systemd
+    freetype
+    fontconfig
   ];
 
   # Automount
