@@ -270,7 +270,6 @@ in
         "float on, match:class dropdown-term"
         "size 75% 75%, match:class dropdown-term"
         "move 30 50, match:class dropdown-term"
-        "dim_around on, match:class dropdown-term"
         "center on, match:class dropdown-term"
         ];
 
