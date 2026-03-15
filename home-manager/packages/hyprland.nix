@@ -95,9 +95,9 @@ let
         let
           windowRuleConfig =
             if ws.wmClass != null then
-              "windowrulev2 = workspace ${wsRef ws} silent,class:^(${ws.wmClass})$"
+              "windowrule = workspace ${wsRef ws} silent, match:class ${ws.wmClass}"
             else if ws.wmTitle != null then
-              "windowrulev2 = workspace ${wsRef ws} silent,title:^(${ws.wmTitle})$"
+              "windowrule = workspace ${wsRef ws} silent, match:title ${ws.wmTitle}"
             else
               "";
           startupConfig =
@@ -131,6 +131,12 @@ in
     type = lib.types.nullOr lib.types.lines;
     default = null;
     description = "Extra configuration lines to append to hyprland.conf.";
+  };
+
+  options.odie.pwaIds = lib.mkOption {
+    type = lib.types.attrsOf lib.types.str;
+    default = {};
+    description = "Map of PWA names to firefoxpwa site IDs, e.g. { whatsapp = \"01KKQASF...\"; }";
   };
 
   options.odie.workspaces = lib.mkOption {
@@ -172,6 +178,9 @@ in
       # App Workspaces
       { name = "slack"; app = "slack"; wmClass = "Slack"; keybind1 = "S"; keybind2 = "S"; }
       { name = "discord"; app = "vesktop"; wmClass = "vesktop"; keybind1 = "S"; keybind2 = "D"; }
+      { name = "whatsapp"; app = "firefoxpwa site launch ${config.odie.pwaIds.whatsapp}"; wmClass = "FFPWA-${config.odie.pwaIds.whatsapp}"; keybind1 = "S"; keybind2 = "W"; }
+      { name = "music"; app = "firefoxpwa site launch ${config.odie.pwaIds.music}"; wmClass = "FFPWA-${config.odie.pwaIds.music}"; keybind1 = "M"; }
+      { name = "openwebui"; app = "firefoxpwa site launch ${config.odie.pwaIds.openwebui}"; wmClass = "FFPWA-${config.odie.pwaIds.openwebui}"; keybind1 = "W"; }
       { name = "obsidian"; app = "obsidian"; wmClass = "obsidian"; keybind1 = "O"; }
       { name = "thunderbird"; app = "thunderbird"; wmClass = "thunderbird"; keybind1 = "E"; startOnStartup = true; }
     ];
@@ -257,12 +266,12 @@ in
       };
 
       # Floating terminal
-      windowrulev2 =  [
-        "float,class:dropdown-term"
-        "size 75% 75%,class:dropdown-term"
-        "move 30 50, class:dropdown-term"
-        "dimaround, class:dropdown-term"
-        "center, class:dropdown-term"
+      windowrule =  [
+        "float on, match:class dropdown-term"
+        "size 75% 75%, match:class dropdown-term"
+        "move 30 50, match:class dropdown-term"
+        "dim_around on, match:class dropdown-term"
+        "center on, match:class dropdown-term"
         ];
 
         # --- Conditional Monitor Configuration ---

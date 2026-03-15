@@ -20,7 +20,6 @@
 
   # Networking
   networking.networkmanager.enable = true;
-  networking.wireless.enable = false;
 
   # Upower
   services.upower.enable = true;

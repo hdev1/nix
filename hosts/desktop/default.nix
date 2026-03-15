@@ -30,6 +30,12 @@
       "HDMI-A-1,2560x1440@74.78,440x-1440,1"
     ];
 
+    odie.pwaIds = {
+      whatsapp = "01KKQASF402WEM5PE59YXVCT7Z";
+      music = "01KKQF4WM5KF8V6FQB9Y3BZSB2";
+      openwebui = "01KKRWQP6413RE5AP2HWX562FQ";
+    };
+
     odie.hyprlandExtraConfig = ''
       workspace=1,monitor:DP-2
       workspace=2,monitor:DP-2

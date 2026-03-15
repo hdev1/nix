@@ -4,7 +4,7 @@
   home.packages = with pkgs; [
     git
     blueman
-    firefox
+    firefoxpwa
     kitty
     inputs.hyprland-contrib.packages.${pkgs.system}.hdrop
     inputs.rose-pine-hyprcursor.packages.${pkgs.system}.default
@@ -18,7 +18,7 @@
     pavucontrol
     xdg-desktop-portal-hyprland
     wireplumber
-    neofetch
+    fastfetch 
     hyprsunset
     sunsetr
     papirus-icon-theme
@@ -37,7 +37,7 @@
     openssl
     chromium
     google-chrome
-    kdePackages.xwaylandvideobridge
+    #kdePackages.xwaylandvideobridge
     kdePackages.kdenlive
     vlc
     python313Packages.cairosvg
@@ -52,5 +52,9 @@
     inputs.dgop.packages.${pkgs.system}.default
     zellij
     lazygit
+    wl-clipboard
   ];
+
+  programs.firefox.enable = true;
+  programs.firefox.nativeMessagingHosts = [ pkgs.firefoxpwa ];
 }
