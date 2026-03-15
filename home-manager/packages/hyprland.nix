@@ -180,7 +180,7 @@ in
       { name = "discord"; app = "vesktop"; wmClass = "vesktop"; keybind1 = "S"; keybind2 = "D"; }
       { name = "whatsapp"; app = "firefoxpwa site launch ${config.odie.pwaIds.whatsapp}"; wmClass = "FFPWA-${config.odie.pwaIds.whatsapp}"; keybind1 = "S"; keybind2 = "W"; }
       { name = "music"; app = "firefoxpwa site launch ${config.odie.pwaIds.music}"; wmClass = "FFPWA-${config.odie.pwaIds.music}"; keybind1 = "M"; }
-      { name = "openwebui"; app = "firefoxpwa site launch ${config.odie.pwaIds.openwebui}"; wmClass = "FFPWA-${config.odie.pwaIds.openwebui}"; keybind1 = "W"; }
+      { name = "openwebui"; app = "firefoxpwa site launch ${config.odie.pwaIds.openwebui}"; wmClass = "FFPWA-${config.odie.pwaIds.openwebui}"; keybind1 = "P"; }
       { name = "obsidian"; app = "obsidian"; wmClass = "obsidian"; keybind1 = "O"; }
       { name = "thunderbird"; app = "thunderbird"; wmClass = "thunderbird"; keybind1 = "E"; startOnStartup = true; }
     ];
