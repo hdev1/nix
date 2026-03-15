@@ -41,6 +41,7 @@
       workspace=2,monitor:DP-2
       workspace=3,monitor:DP-2
       workspace=4,monitor:DP-2
+      workspace=name:music,monitor:HDMI-A-1
     '';
   };
 
