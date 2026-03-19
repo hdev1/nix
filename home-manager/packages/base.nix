@@ -10,6 +10,7 @@
     inputs.rose-pine-hyprcursor.packages.${pkgs.system}.default
     inputs.claude-code.packages.${pkgs.system}.default
     inputs.nix4nvchad.packages."${pkgs.system}".nvchad
+    ripgrep
     slack
     vesktop
     docker
@@ -39,6 +40,7 @@
     google-chrome
     #kdePackages.xwaylandvideobridge
     kdePackages.kdenlive
+    krita
     vlc
     python313Packages.cairosvg
     thunderbird
